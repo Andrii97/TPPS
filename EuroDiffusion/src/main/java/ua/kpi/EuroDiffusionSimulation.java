@@ -8,6 +8,9 @@ import java.util.Arrays;
 public class EuroDiffusionSimulation {
     public static final String NUMBER_OF_COUNTRIES_ERROR =
             "Number of countries should be not more that max value.";
+    public static final String COUNTRIES_SHOULD_BE_CONNECTED_ERROR =
+            "The countries should be connected.";
+    public static final int MAX_NUMBER_OF_DAYS = 20000;
     public static final int MAX_NUMBER_OF_COUNTRIES = 20;
     public static final int MAX_X = 10;
     public static final int MAX_Y = 10;
@@ -46,12 +49,15 @@ public class EuroDiffusionSimulation {
         }
     }
 
-
-    public void simulate() {
+    public void simulate() throws Exception {
+        int day = 0;
         while (!isEnd()) {
+            day++;
             for (int i = 0; i < numberOfCountries; i++) {
                 countries[i].nextDay();
             }
+            if (day > MAX_NUMBER_OF_DAYS)
+                throw new Exception(COUNTRIES_SHOULD_BE_CONNECTED_ERROR);
         }
     }
 
