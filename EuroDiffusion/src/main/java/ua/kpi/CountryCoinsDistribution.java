@@ -67,23 +67,32 @@ public class CountryCoinsDistribution implements Comparable {
 
     private int transportToNeighbors(int[][] matrix, int x, int y, int amountToTransport) {
         int numberOfSuccessfulTransportation = 0;
-        if (checkIsCityAvailable(x - 1, y) && amountToTransport > 0) {
-            matrix[x - 1][y] += amountToTransport;
+
+        if (amountToTransport <= 0)
+            return numberOfSuccessfulTransportation;
+
+        if (updateNeighborCoins(matrix, x - 1, y, amountToTransport))
             numberOfSuccessfulTransportation++;
-        }
-        if (checkIsCityAvailable(x, y - 1) && amountToTransport > 0) {
-            matrix[x][y - 1] += amountToTransport;
+
+        if (updateNeighborCoins(matrix, x, y - 1, amountToTransport))
             numberOfSuccessfulTransportation++;
-        }
-        if (checkIsCityAvailable(x + 1, y) && amountToTransport > 0) {
-            matrix[x + 1][y] += amountToTransport;
+
+        if (updateNeighborCoins(matrix, x + 1, y, amountToTransport))
             numberOfSuccessfulTransportation++;
-        }
-        if (checkIsCityAvailable(x, y + 1) && amountToTransport > 0) {
-            matrix[x][y + 1] += amountToTransport;
+
+        if (updateNeighborCoins(matrix, x, y + 1, amountToTransport))
             numberOfSuccessfulTransportation++;
-        }
+
         return numberOfSuccessfulTransportation;
+    }
+
+    private boolean updateNeighborCoins(int[][] matrix, int x, int y, int amountToTransport) {
+        if (!checkIsCityAvailable(x, y)) {
+            return false;
+        }
+
+        matrix[x][y] += amountToTransport;
+        return true;
     }
 
     private int[][] initMatrix() {
