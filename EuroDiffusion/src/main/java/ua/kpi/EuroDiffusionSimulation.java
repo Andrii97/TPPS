@@ -58,8 +58,8 @@ public class EuroDiffusionSimulation {
     private boolean isEnd() {
         boolean result = true;
         for (int i = 0; i < numberOfCountries; i++) {
-            if (!countries[i].isComplete())
-                result &= checkCountryComplete(countries[i]);
+            if (!countries[i].isComplete() && !checkCountryComplete(countries[i]))
+                result = false;
         }
         return result;
     }
